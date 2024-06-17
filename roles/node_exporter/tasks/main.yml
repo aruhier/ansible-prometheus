@@ -59,5 +59,16 @@
     state: started
   when:
     - not ansible_check_mode
+    - ansible_service_mgr == "systemd"
   tags:
     - node_exporter_run
+
+- name: Ensure Node Exporter openrc service is enabled on boot
+  become: true
+  ansible.builtin.service:
+    name: node_exporter
+    enabled: true
+    state: started
+  tags:
+    - node_exporter_run
+  when: ansible_service_mgr == "openrc"
