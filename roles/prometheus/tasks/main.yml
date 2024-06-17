@@ -42,8 +42,7 @@
 
 - name: Ensure prometheus service is started and enabled
   become: true
-  ansible.builtin.systemd:
-    daemon_reload: true
+  ansible.builtin.service:
     name: prometheus
     state: started
     enabled: true
@@ -55,6 +54,6 @@
 - name: Make sure prometheus service is running
   ansible.builtin.service_facts: {}
   register: __service_status
-  until: "__service_status.ansible_facts.services['prometheus.service'].state == 'running'"
+  until: "__service_status.ansible_facts.services['prometheus' ~ ('.service' if ansible_facts['service_mgr'] == 'systemd' else '')].state in ['running', 'started']"
   retries: 10
   delay: 5
