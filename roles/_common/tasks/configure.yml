@@ -18,6 +18,23 @@
   become: true
   notify:
     - "{{ ansible_parent_role_names | first }} : Restart {{ _common_service_name }}"
+  when: ansible_facts['service_mgr'] == 'systemd'
+  tags:
+    - "{{ ansible_parent_role_names | first | regex_replace(ansible_collection_name ~ '.', '') }}"
+    - configure
+    - "{{ ansible_parent_role_names | first | regex_replace(ansible_collection_name ~ '.', '') }}_configure"
+
+- name: "Create openrc service {{ _common_service_name }}"
+  ansible.builtin.template:
+    src: "{{ _common_service_name }}.initd.j2"
+    dest: "/etc/init.d/{{ _common_service_name }}"
+    owner: root
+    group: root
+    mode: 0755
+  become: true
+  notify:
+    - "{{ ansible_parent_role_names | first }} : Restart {{ _common_service_name }}"
+  when: ansible_facts['service_mgr'] == 'openrc'
   tags:
     - "{{ ansible_parent_role_names | first | regex_replace(ansible_collection_name ~ '.', '') }}"
     - configure

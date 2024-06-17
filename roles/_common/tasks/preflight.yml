@@ -41,10 +41,10 @@
     - configure
     - "{{ ansible_parent_role_names | first | regex_replace(ansible_collection_name ~ '.', '') }}_configure"
 
-- name: Assert usage of systemd as an init system
+- name: Assert usage of systemd or openrc as an init system
   ansible.builtin.assert:
-    that: ansible_facts['service_mgr'] == 'systemd'
-    msg: "This module only works with systemd"
+    that: ansible_facts['service_mgr'] in ['systemd', 'openrc']
+    msg: "This module only works with systemd or openrc"
   tags:
     - "{{ ansible_parent_role_names | first | regex_replace(ansible_collection_name ~ '.', '') }}"
     - configure
