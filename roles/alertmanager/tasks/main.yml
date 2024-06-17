@@ -45,8 +45,7 @@
 
 - name: Ensure alertmanager service is started and enabled
   become: true
-  ansible.builtin.systemd:
-    daemon_reload: true
+  ansible.builtin.service:
     name: alertmanager
     state: started
     enabled: true
