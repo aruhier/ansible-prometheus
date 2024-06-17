@@ -1,5 +1,5 @@
 ---
-namespace: prometheus
+namespace: aruhier
 name: prometheus
 version: 0.30.3
 readme: README.md

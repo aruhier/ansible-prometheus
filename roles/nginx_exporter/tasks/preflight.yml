@@ -1,7 +1,7 @@
 ---
 - name: Common preflight
   ansible.builtin.include_role:
-    name: prometheus.prometheus._common
+    name: aruhier.prometheus._common
     tasks_from: preflight.yml
   vars:
     _common_web_listen_address: "{{ nginx_exporter_web_listen_address }}"

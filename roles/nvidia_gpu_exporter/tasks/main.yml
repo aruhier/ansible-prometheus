@@ -13,7 +13,7 @@
 
 - name: Install
   ansible.builtin.include_role:
-    name: prometheus.prometheus._common
+    name: aruhier.prometheus._common
     tasks_from: install.yml
   vars:
     _common_local_cache_path: "{{ nvidia_gpu_exporter_local_cache_path }}"
@@ -31,7 +31,7 @@
 
 - name: SELinux
   ansible.builtin.include_role:
-    name: prometheus.prometheus._common
+    name: aruhier.prometheus._common
     tasks_from: selinux.yml
   vars:
     _common_selinux_port: "{{ ('//' ~ nvidia_gpu_exporter_web_listen_address) | ansible.builtin.urlsplit('port') }}"
@@ -43,7 +43,7 @@
 
 - name: Configure
   ansible.builtin.include_role:
-    name: prometheus.prometheus._common
+    name: aruhier.prometheus._common
     tasks_from: configure.yml
   vars:
     _common_system_user: "{{ nvidia_gpu_exporter_system_user }}"
